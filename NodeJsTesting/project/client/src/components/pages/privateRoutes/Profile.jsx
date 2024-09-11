@@ -1,15 +1,19 @@
 import React, { useContext } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 import { GlobalContext } from "../../../context/GlobalContext";
 
 export default function Profile() {
-  const { user } = useContext(GlobalContext);
+  const { user, setIsAuth, setUser } = useContext(GlobalContext);
   async function deleteUser(){
     try{
       const url = `http://localhost:3000/api/users/delete/${user._id}`
-      const {result} = await axios.delete(url)
+      const result = await axios.delete(url)
       console.log(result)
       if(result!=null){
+      console.log("result2",result)
+      toast.success("Profile updated successfully");
         setIsAuth(false);
         setUser(null);
       }
@@ -17,6 +21,8 @@ export default function Profile() {
     }catch(error)
     {
       console.error(error);
+      toast.error("An error occurred while delete the user");
+
     }
 
 

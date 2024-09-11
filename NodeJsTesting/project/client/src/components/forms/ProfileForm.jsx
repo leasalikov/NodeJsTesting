@@ -40,8 +40,11 @@ export default function ProfileForm() {
     }
     console.log("updateUser",updateUser)
     try {
-      const { result } = await axios.put(url, updateUser);
-      console.log("oved",result.status)
+      // const { result } = await axios.put(url, updateUser);
+     const result=await axios.put(url, updateUser);
+// console.log("res.statuse",res.statuse)
+
+      console.log("result",result.status)
       // if (result.success === true) {
         setUser(updateUser)
         toast.success("Profile updated successfully");

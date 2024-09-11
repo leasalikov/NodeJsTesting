@@ -35,7 +35,9 @@ exports.updateById = async function (request, response) {
     console.log("dfghjk", id, request.body)
     const user = await updateUser(id, request.body);
     console.log("user controller", user)
-    response.send({ status: 200 })
+    response.status(200).send({ status: 200 })
+    // response.status(200)
+
   } catch (error) {
     response.status(500).send(error);
   }
@@ -47,8 +49,14 @@ exports.deleteById = async function (request, response) {
     const id = request.params.id;
     const result = await deleteUser(id);
     console.log("delete controller", result)
-    response.json({ status: 200 })
+      // response.status(200).send({ status: 200 })
+
+    if(result!=null)
+      response.status(200).send({ status: 200 })
+    else throw new Error("ijij")
+    
   } catch (error) {
+    console.log(error)
     response.status(500).send(error);
   }
 
