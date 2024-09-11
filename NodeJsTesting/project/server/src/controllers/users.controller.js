@@ -5,6 +5,7 @@ const {
   getAllUsers,
   getUser,
   updateUser,
+  deleteUser,
 } = require("../service/user.service.js");
 const { compare } = require("bcrypt");
 const { signJwt, verifyJwt } = require("../utils/jwt.js");
@@ -27,12 +28,32 @@ exports.getUserById = async function (request, response) {
   response.send(user);
 };
 
+//to update
 exports.updateById = async function (request, response) {
-  const id = request.params.id;
-  console.log("dfghjk", id, request.body)
-  const user = await updateUser(id, request.body);
-  response.send(user);
+  try {
+    const id = request.params.id;
+    console.log("dfghjk", id, request.body)
+    const user = await updateUser(id, request.body);
+    console.log("user controller", user)
+    response.send({ status: 200 })
+  } catch (error) {
+    response.status(500).send(error);
+  }
+
 };
+//to update this func!!!
+exports.deleteById = async function (request, response) {
+  try {
+    const id = request.params.id;
+    const result = await deleteUser(id);
+    console.log("delete controller", result)
+    response.json({ status: 200 })
+  } catch (error) {
+    response.status(500).send(error);
+  }
+
+};
+
 
 exports.authUser = async function (request, response) {
   try {
@@ -47,7 +68,7 @@ exports.authUser = async function (request, response) {
     response.json({ success: true, user: decode._doc || decode });
   } catch (error) {
     response.status(500);
-    response.send({error:error.message});
+    response.send({ error: error.message });
   }
 };
 

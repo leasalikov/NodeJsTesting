@@ -1,8 +1,26 @@
 import React, { useContext } from "react";
+import axios from "axios";
 import { GlobalContext } from "../../../context/GlobalContext";
 
 export default function Profile() {
   const { user } = useContext(GlobalContext);
+  async function deleteUser(){
+    try{
+      const url = `http://localhost:3000/api/users/delete/${user._id}`
+      const {result} = await axios.delete(url)
+      console.log(result)
+      if(result!=null){
+        setIsAuth(false);
+        setUser(null);
+      }
+      // console.log("result",result,"id ",user._id);
+    }catch(error)
+    {
+      console.error(error);
+    }
+
+
+  }
   return (
     <div className="h-screen w-full ">
     <div className="h-[80%] w-full flex justify-center items-center">
@@ -51,7 +69,7 @@ export default function Profile() {
         </div>
         <div className="flex justify-center items-center gap-5">
           <button className="btn btn-primary" onClick={() => profileModal.showModal()}>Edit</button>
-          <button className="btn btn-error">Delete</button>
+          <button className="btn btn-error" onClick={deleteUser}>Delete</button>
         </div>
       </div>
     </div>

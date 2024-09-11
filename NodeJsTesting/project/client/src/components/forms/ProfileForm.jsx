@@ -32,29 +32,25 @@ export default function ProfileForm() {
       toast.error("Passwords do not match");
       return;
     }
-    setUser({
+    const updateUser={
       ...user,
       user_name: values.user_name,
       user_email: values.user_email,
       user_password: values.user_password
-    })
+    }
+    console.log("updateUser",updateUser)
     try {
-      console.log("new   ", url, user)
-      const { data } = await axios.put(url, user);
-      setUser(data);
-      // console.log(data);
-      toast.success("Profile updated successfully");
+      const { result } = await axios.put(url, updateUser);
+      console.log("oved",result.status)
+      // if (result.success === true) {
+        setUser(updateUser)
+        toast.success("Profile updated successfully");
+        profileModal.close();
+      // }
     } catch (error) {
       console.error(error);
       toast.error("An error occurred while updating the profile");
     }
-    //     const path = isLoginPage ? "login" : "register";
-    //     const result = await authRequest(values, path);
-    //     console.log("result  ", result)
-    //     if (result.success === false) return setError(result.message);
-
-    //     path == "login" && setIsAuth(true)
-    //     path == "login" && setUser(result)
   }
 
   return (

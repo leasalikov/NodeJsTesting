@@ -3,6 +3,7 @@ const {
   getUsers,
   getUserById,
   updateById,
+  deleteById,
   register,
   loginUser,
   getCurrentUser,
@@ -43,6 +44,9 @@ router.get("/auth",authUser);
 router.get("/logout",logOut)
 
 router.put("/update/:id", updateById)
+
+
+router.delete("/delete/:id",deleteById)
 
 router.post(
   "/verify/:id/:verificationCode",
